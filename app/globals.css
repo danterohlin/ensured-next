@@ -1,0 +1,102 @@
+@import 'tailwindcss';
+@import 'overlayscrollbars/overlayscrollbars.css';
+
+@theme {
+  --color-ensured-purple: --alpha(rgba(52 14 63) / 100%);
+  --color-ensured-purple-dark: --alpha(rgba(34 2 38) / 100%);
+  --color-ensured-pink: #fb00ff;
+  --color-ensured-black: #262626;
+  --color-background: #220226;
+  --color-foreground: #fff;
+  --color-ensured-purple-light: --alpha(rgba(74 27 87) / 100%);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-poppins);
+}
+
+/* Enhanced backdrop blur support */
+@supports (backdrop-filter: blur(12px)) {
+  .backdrop-blur-md {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+/* Custom OverlayScrollbars theme to match your dark design */
+.os-theme-dark.os-scrollbar {
+  --os-size: 8px;
+  --os-padding-perpendicular: 2px;
+  --os-padding-axis: 2px;
+  --os-track-border-radius: 4px;
+  --os-track-bg: rgba(255, 255, 255, 0.05);
+  --os-track-bg-hover: rgba(255, 255, 255, 0.1);
+  --os-track-bg-active: rgba(255, 255, 255, 0.15);
+  --os-handle-border-radius: 4px;
+  --os-handle-bg: rgba(94, 61, 94, 0.6);
+  --os-handle-bg-hover: rgba(114, 83, 115, 0.8);
+  --os-handle-bg-active: rgb(106, 82, 106);
+  --os-handle-min-size: 4px;
+}
+
+.os-theme-dark.os-scrollbar-horizontal {
+  bottom: 0;
+  height: var(--os-size);
+}
+
+.os-theme-dark.os-scrollbar-vertical {
+  right: 0;
+  width: var(--os-size);
+}
+
+.os-theme-dark .os-scrollbar-track {
+  background: var(--os-track-bg);
+  border-radius: var(--os-track-border-radius);
+}
+
+.os-theme-dark .os-scrollbar-handle {
+  background: var(--os-handle-bg);
+  border-radius: var(--os-handle-border-radius);
+  min-height: var(--os-handle-min-size);
+  min-width: var(--os-handle-min-size);
+  transition: background-color 0.2s ease;
+}
+
+.os-theme-dark .os-scrollbar-handle:hover {
+  background: var(--os-handle-bg-hover);
+}
+
+.os-theme-dark .os-scrollbar-handle:active {
+  background: var(--os-handle-bg-active);
+}
+
+/* Custom scrollbar for fallback */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(94, 61, 94, 0.6) rgba(255, 255, 255, 0.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(94, 61, 94, 0.6);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(114, 83, 115, 0.8);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:active {
+  background: rgb(106, 82, 106);
+}
