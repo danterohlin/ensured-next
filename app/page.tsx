@@ -253,7 +253,7 @@ export default function Home() {
             {!isContractor && (
               <div className="space-y-3">
                 <div className="mb-4 text-sm font-medium opacity-70">
-                  Hårt sedan sist
+                  Hänt sedan sist
                 </div>
                 <motion.div
                   initial={{

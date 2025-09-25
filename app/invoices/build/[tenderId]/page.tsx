@@ -475,7 +475,7 @@ export default function InvoiceBuilderPage() {
         <div className="absolute -top-40 left-1/2 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-[#6b1d7e]/25 blur-[140px]" />
         <div className="absolute -bottom-40 right-[-120px] h-[540px] w-[540px] rounded-full bg-[#2a0a35]/40 blur-[120px]" />
       </div>
-      <PageScrollWrapper className="h-screen">
+      <PageScrollWrapper key={loading ? 'boot' : 'ready'} className="h-screen">
         <main className="relative z-10 max-w-[1400px] px-6 py-8 pl-34 mt-10 pt-20">
           <button
             onClick={() => router.back()}
@@ -829,7 +829,7 @@ export default function InvoiceBuilderPage() {
               <span>Räkngar ut kalkyl baserat på skadeanmälan…</span>
             )}
             {loading === 'saving' && <span>Sparar utkast…</span>}
-            {loading === 'sending' && <span>Skickar faktura…</span>}
+            {loading === 'sending' && <span>Skickar offert…</span>}
           </div>
         </div>
       )}

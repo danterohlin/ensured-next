@@ -755,7 +755,7 @@ export default function TenderPage() {
                           </button>
                         )}
                         <div className="text-xs text-white/60 mb-2">
-                          Inkomna fakturor
+                          Inkomna offerter
                         </div>
                         {(tenderInvoices || []).length === 0 ? (
                           <div className="text-xs text-white/50">
