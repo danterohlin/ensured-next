@@ -231,13 +231,9 @@ export default function InvoiceBuilderPage() {
   type DraftItem = MomentTemplateItem & { id: string };
   const [draftName, setDraftName] = useState<string>('');
   const [draftItems, setDraftItems] = useState<DraftItem[]>([]);
-  const [editingTemplateId, setEditingTemplateId] = useState<string | null>(
-    null
-  );
   const resetDraft = () => {
     setDraftName('');
     setDraftItems([]);
-    setEditingTemplateId(null);
   };
   const addDraftRow = () => {
     setDraftItems((d) => [
@@ -275,35 +271,18 @@ export default function InvoiceBuilderPage() {
   };
   const saveDraftTemplate = () => {
     if (!draftName || draftItems.length === 0) return;
-    if (editingTemplateId) {
-      // Update existing custom template
-      setTemplates((prev) => {
-        const next = prev.map((t) =>
-          t.id === editingTemplateId
-            ? {
-                ...t,
-                name: draftName,
-                items: draftItems.map(({ id: _id, ...rest }) => rest),
-              }
-            : t
-        );
-        persistCustomTemplates(next);
-        return next;
-      });
-    } else {
-      const id = `custom-${Date.now()}`;
-      const prepared: MomentTemplate = {
-        id,
-        name: draftName,
-        group: 'Custom',
-        items: draftItems.map(({ id: _id, ...rest }) => rest),
-      };
-      setTemplates((prev) => {
-        const combined = [...prev, prepared];
-        persistCustomTemplates(combined);
-        return combined;
-      });
-    }
+    const id = `custom-${Date.now()}`;
+    const prepared: MomentTemplate = {
+      id,
+      name: draftName,
+      group: 'Custom',
+      items: draftItems.map(({ id: _id, ...rest }) => rest),
+    };
+    setTemplates((prev) => {
+      const combined = [...prev, prepared];
+      persistCustomTemplates(combined);
+      return combined;
+    });
     resetDraft();
     setIsManageOpen(false);
   };
@@ -496,7 +475,7 @@ export default function InvoiceBuilderPage() {
         <div className="absolute -top-40 left-1/2 h-[700px] w-[700px] -translate-x-1/2 rounded-full bg-[#6b1d7e]/25 blur-[140px]" />
         <div className="absolute -bottom-40 right-[-120px] h-[540px] w-[540px] rounded-full bg-[#2a0a35]/40 blur-[120px]" />
       </div>
-      <PageScrollWrapper key={tender.id} className="h-screen">
+      <PageScrollWrapper className="h-screen">
         <main className="relative z-10 max-w-[1400px] px-6 py-8 pl-34 mt-10 pt-20">
           <button
             onClick={() => router.back()}
@@ -896,44 +875,23 @@ export default function InvoiceBuilderPage() {
                             {t.items.length} rader
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => {
-                              // Load into draft for editing
-                              setEditingTemplateId(t.id);
-                              setDraftName(t.name);
-                              setDraftItems(
-                                t.items.map((it, i) => ({
-                                  id: `${t.id}-${i}`,
-                                  ...it,
-                                })) as DraftItem[]
-                              );
-                            }}
-                            className="grid h-8 px-2 place-items-center rounded-md bg-white/10 hover:bg-white/15 ring-1 ring-white/10 text-[11px]"
-                            title="Redigera"
-                          >
-                            Redigera
-                          </button>
-                          <button
-                            onClick={() => deleteTemplate(t.id)}
-                            className="grid h-8 w-8 place-items-center rounded-md bg-white/10 hover:bg-white/15 ring-1 ring-white/10"
-                            title="Ta bort"
-                          >
-                            <FontAwesomeIcon
-                              icon={faTrash}
-                              className="h-3 w-3 text-white/70"
-                            />
-                          </button>
-                        </div>
+                        <button
+                          onClick={() => deleteTemplate(t.id)}
+                          className="grid h-8 w-8 place-items-center rounded-md bg-white/10 hover:bg-white/15 ring-1 ring-white/10"
+                          title="Ta bort"
+                        >
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            className="h-3 w-3 text-white/70"
+                          />
+                        </button>
                       </div>
                     ))}
                 </div>
               </div>
               <div className="rounded-lg bg-white/5 ring-1 ring-white/10 p-3">
                 <div className="text-xs font-medium text-white/80 mb-2">
-                  {editingTemplateId
-                    ? 'Redigera standard'
-                    : 'Skapa ny standard'}
+                  Skapa ny standard
                 </div>
                 <div className="space-y-3">
                   <div>
@@ -1109,19 +1067,11 @@ export default function InvoiceBuilderPage() {
                     </div>
                   </div>
                   <div className="flex justify-end gap-2 pt-2">
-                    {editingTemplateId && (
-                      <button
-                        onClick={resetDraft}
-                        className="rounded-md bg-white/10 hover:bg-white/15 transition-colors px-4 py-2 text-sm"
-                      >
-                        Avbryt
-                      </button>
-                    )}
                     <button
                       onClick={saveDraftTemplate}
                       className="rounded-md bg-[#a145b7] hover:bg-[#8d3aa0] transition-colors px-4 py-2 text-sm"
                     >
-                      {editingTemplateId ? 'Spara ändringar' : 'Spara standard'}
+                      Spara standard
                     </button>
                   </div>
                 </div>
