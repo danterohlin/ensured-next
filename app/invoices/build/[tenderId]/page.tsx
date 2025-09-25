@@ -348,7 +348,7 @@ export default function InvoiceBuilderPage() {
     return (
       <div className="relative min-h-screen w-full overflow-hidden bg-background text-white">
         <PageScrollWrapper className="h-screen">
-          <main className="relative z-10 max-w-[1400px] px-6 py-8 pl-34 pt-20">
+          <main className="relative z-10 max-w-[1400px] px-6 py-8 pl-34 pt-20 ">
             <button
               onClick={() => router.back()}
               className="text-sm text-[#a145b7] hover:text-[#8d3aa0] cursor-pointer mb-6 flex items-center gap-2"
