@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 export default function LoginPage() {
-  const { setIsLoggedIn, setBreadCrumbs } = useContext(AppContext);
+  const { setIsLoggedIn, setBreadCrumbs, loginAs } = useContext(AppContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -24,6 +24,14 @@ export default function LoginPage() {
     // Fake delay to mimic request
     await new Promise((r) => setTimeout(r, 500));
     setIsLoggedIn(true);
+    router.push('/');
+  };
+
+  const quickLogin = async (type: 1 | 2 | 3) => {
+    if (loading) return;
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 300));
+    loginAs(type);
     router.push('/');
   };
 
@@ -107,13 +115,31 @@ export default function LoginPage() {
             </div>
           </form>
 
-          <div className="mt-6 flex items-center justify-between text-xs text-white/80">
-            <Link href="#" className="hover:underline">
-              Glömt lösenord?
-            </Link>
-            <Link href="#" className="hover:underline">
-              Inte kund än?
-            </Link>
+          <div className="mt-6 grid gap-2 text-xs text-white/80">
+            <div className="opacity-70">Snabbinloggning</div>
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                type="button"
+                onClick={() => quickLogin(1)}
+                className="rounded-xl bg-white/10 px-3 py-2 hover:bg-white/15"
+              >
+                Försäkringsbolag
+              </button>
+              <button
+                type="button"
+                onClick={() => quickLogin(3)}
+                className="rounded-xl bg-white/10 px-3 py-2 hover:bg-white/15"
+              >
+                Entreprenör
+              </button>
+              <button
+                type="button"
+                onClick={() => quickLogin(2)}
+                className="rounded-xl bg-white/10 px-3 py-2 hover:bg-white/15"
+              >
+                Fastighetsägare
+              </button>
+            </div>
           </div>
         </div>
       </motion.div>

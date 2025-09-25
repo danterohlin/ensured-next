@@ -43,13 +43,13 @@ export default function LogoutModal({
           <div className="ml-4 flex gap-2">
             <button
               onClick={onConfirm}
-              className="rounded-full cursor-pointer border border-ensured-pink/50 px-4 py-1.5 text-sm hover:bg-white/20 transition-colors"
+              className="rounded-full cursor-pointer w-20 border border-ensured-pink/50 px-4 py-1.5 text-sm hover:bg-white/20 transition-colors"
             >
               Ja
             </button>
             <button
               onClick={onClose}
-              className="rounded-full cursor-pointer bg-[#a145b7] px-4 py-1.5 text-sm hover:bg-[#8d3aa0] transition-colors"
+              className="rounded-full cursor-pointer w-20 bg-[#a145b7] px-4 py-1.5 text-sm hover:bg-[#8d3aa0] transition-colors"
             >
               Avbryt
             </button>

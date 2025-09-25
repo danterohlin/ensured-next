@@ -307,7 +307,21 @@ export default function ProtocolsPage() {
           {/* Denied section */}
           <div className="mb-8">
             <h3 className="mb-4 text-sm opacity-70 font-light">Nekade</h3>
-            <div className="rounded-2xl bg-white/5 p-6 ring-1 ring-white/10 overflow-hidden">
+
+            <motion.div
+              initial={{
+                y: 10,
+                opacity: 0,
+              }}
+              animate={{
+                y: [10, 0],
+                opacity: [0, 1],
+                transition: {
+                  delay: 1,
+                },
+              }}
+              className="rounded-2xl bg-white/5 p-6 ring-1 ring-white/10 overflow-hidden"
+            >
               <table className="w-full">
                 <thead>
                   <tr className="text-xs opacity-70">
@@ -370,7 +384,7 @@ export default function ProtocolsPage() {
                   <FontAwesomeIcon icon={faLongArrowRight} />
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </main>
       </PageScrollWrapper>

@@ -1,5 +1,6 @@
 'use client';
 import { useContext, useEffect, useMemo } from 'react';
+import Link from 'next/link';
 import { AppContext } from '../context/AppContext';
 import { useAIChat } from '../context/AIChatContext';
 import { useLogoutModal } from '../context/LogoutModalContext';
@@ -22,7 +23,7 @@ import {
   faChevronRight,
   faChevronDown,
 } from '@fortawesome/pro-light-svg-icons';
-import Link from 'next/link';
+
 import MessageBot from '../components/MessageBot';
 import { motion } from 'framer-motion';
 
@@ -147,19 +148,27 @@ export default function InvoicesPage() {
                         />
                       </td>
                       <td className="py-3 text-center">
-                        <button className="grid h-8 w-8 place-items-center mx-auto">
+                        <Link
+                          href={`/invoices/${invoice.invoiceNumber}`}
+                          className="grid h-8 w-8 place-items-center mx-auto"
+                        >
                           <FontAwesomeIcon
                             icon={faFilePdf}
                             className="h-3 w-3 text-ensured-pink"
                           />
-                        </button>
+                        </Link>
                       </td>
                       <td className="py-3 text-xs text-center">
-                        Visa{' '}
-                        <FontAwesomeIcon
-                          icon={faChevronRight}
-                          className="text-ensured-pink"
-                        />
+                        <Link
+                          href={`/tender/${invoice.tenderId}?boot=1`}
+                          className="hover:underline underline-offset-2"
+                        >
+                          Visa{' '}
+                          <FontAwesomeIcon
+                            icon={faChevronRight}
+                            className="text-ensured-pink"
+                          />
+                        </Link>
                       </td>
                     </tr>
                   ))}
@@ -242,19 +251,27 @@ export default function InvoicesPage() {
                         6 aug 2024, 14:02
                       </td>
                       <td className="py-3 text-center">
-                        <button className="grid h-8 w-8 place-items-center mx-auto">
+                        <Link
+                          href={`/invoices/${invoice.invoiceNumber}`}
+                          className="grid h-8 w-8 place-items-center mx-auto"
+                        >
                           <FontAwesomeIcon
                             icon={faFilePdf}
                             className="h-3 w-3 text-ensured-pink"
                           />
-                        </button>
+                        </Link>
                       </td>
                       <td className="py-3 text-xs text-center">
-                        Visa{' '}
-                        <FontAwesomeIcon
-                          icon={faChevronRight}
-                          className="text-ensured-pink"
-                        />
+                        <Link
+                          href={`/tender/${invoice.tenderId}?boot=1`}
+                          className="hover:underline underline-offset-2"
+                        >
+                          Visa{' '}
+                          <FontAwesomeIcon
+                            icon={faChevronRight}
+                            className="text-ensured-pink"
+                          />
+                        </Link>
                       </td>
                     </tr>
                   ))}
@@ -272,7 +289,20 @@ export default function InvoicesPage() {
           {/* Rejected section */}
           <div className="mb-8">
             <h3 className="mb-4 text-sm opacity-70 font-light">Nekade</h3>
-            <div className="rounded-2xl bg-white/5 p-6 ring-1 ring-white/10 overflow-hidden">
+            <motion.div
+              initial={{
+                y: 10,
+                opacity: 0,
+              }}
+              animate={{
+                y: [10, 0],
+                opacity: [0, 1],
+                transition: {
+                  delay: 1,
+                },
+              }}
+              className="rounded-2xl bg-white/5 p-6 ring-1 ring-white/10 overflow-hidden"
+            >
               <table className="w-full">
                 <thead>
                   <tr className="text-xs opacity-70">
@@ -323,19 +353,27 @@ export default function InvoicesPage() {
                         15 jul 2024, 09:30
                       </td>
                       <td className="py-3 text-center">
-                        <button className="grid h-8 w-8 place-items-center mx-auto">
+                        <Link
+                          href={`/invoices/${invoice.invoiceNumber}`}
+                          className="grid h-8 w-8 place-items-center mx-auto"
+                        >
                           <FontAwesomeIcon
                             icon={faFilePdf}
                             className="h-3 w-3 text-ensured-pink"
                           />
-                        </button>
+                        </Link>
                       </td>
                       <td className="py-3 text-xs text-center">
-                        Visa{' '}
-                        <FontAwesomeIcon
-                          icon={faChevronRight}
-                          className="text-ensured-pink"
-                        />
+                        <Link
+                          href={`/tender/${invoice.tenderId}?boot=1`}
+                          className="hover:underline underline-offset-2"
+                        >
+                          Visa{' '}
+                          <FontAwesomeIcon
+                            icon={faChevronRight}
+                            className="text-ensured-pink"
+                          />
+                        </Link>
                       </td>
                     </tr>
                   ))}
@@ -348,7 +386,7 @@ export default function InvoicesPage() {
                   <FontAwesomeIcon icon={faLongArrowRight} />
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </main>
       </PageScrollWrapper>

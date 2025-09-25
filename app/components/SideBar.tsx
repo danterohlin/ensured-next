@@ -7,18 +7,21 @@ import {
   faPersonToDoor,
   faSignature,
 } from '@fortawesome/pro-light-svg-icons';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSettings } from '../context/SettingsContext';
 import { useLogoutModal } from '../context/LogoutModalContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { AppContext } from '../context/AppContext';
 
 export default function SideBar() {
   const { toggleSettings } = useSettings();
   const { openModal } = useLogoutModal();
   const { isModalOpen } = useLogoutModal();
   const url = usePathname();
+  const { user } = useContext(AppContext);
+  const isContractor = user?.type === 3;
 
   if (url === '/login') {
     return null;
@@ -32,16 +35,20 @@ export default function SideBar() {
           href="/"
           active={url === '/' || url.startsWith('/tender/')}
         />
-        <SidebarIcon
-          icon={faFileInvoice}
-          href="/invoices"
-          active={url === '/invoices'}
-        />
-        <SidebarIcon
-          icon={faSignature}
-          href="/protocols"
-          active={url === '/protocols'}
-        />
+        {!isContractor && (
+          <>
+            <SidebarIcon
+              icon={faFileInvoice}
+              href="/invoices"
+              active={url === '/invoices'}
+            />
+            <SidebarIcon
+              icon={faSignature}
+              href="/protocols"
+              active={url === '/protocols'}
+            />
+          </>
+        )}
       </div>
       <div className="flex flex-col bg-ensured-purple/20 rounded-full">
         <SidebarIcon icon={faCog} onClick={toggleSettings} />
@@ -80,7 +87,7 @@ function SidebarIcon({
   if (onClick) {
     return (
       <button onClick={onClick} className={className}>
-        <FontAwesomeIcon icon={icon} className="h-4 w-4" />
+        <FontAwesomeIcon icon={icon} className="text-lg" />
       </button>
     );
   }
@@ -88,14 +95,14 @@ function SidebarIcon({
   if (!href) {
     return (
       <div className={className}>
-        <FontAwesomeIcon icon={icon} className="h-4 w-4" />
+        <FontAwesomeIcon icon={icon} className="text-lg" />
       </div>
     );
   }
 
   return (
     <Link href={href} className={className}>
-      <FontAwesomeIcon icon={icon} className="h-4 w-4" />
+      <FontAwesomeIcon icon={icon} className="text-lg" />
     </Link>
   );
 }

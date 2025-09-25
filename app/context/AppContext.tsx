@@ -12,6 +12,21 @@ export type Invoice = {
   file?: string;
   actionTaken?: string | null;
   status: 1 | 2 | 3 | 4; // 1 waiting, 2 approved, 3 payed, 4 denied
+  items?: Array<{
+    code?: string;
+    title: string;
+    unit: string;
+    qty: number;
+    unitPrice: number;
+  }>;
+  vatPct?: number;
+  adminSurchargePct?: number;
+  travelSurcharge?: number;
+  selfRisk?: number;
+  subTotal?: number;
+  beforeVat?: number;
+  vat?: number;
+  total?: number;
 };
 
 export type DocumentItem = {
@@ -65,6 +80,12 @@ export type Tender = {
   startingAt?: string | null;
   endingAt?: string | null;
   comments?: Array<{ author: User; comment: string; createdAt: string }>;
+  phaseDates?: {
+    registered?: string;
+    biddingStarted?: string;
+    awaitingResponse?: string;
+    approved?: string;
+  };
 };
 
 export type Quote = {
@@ -123,6 +144,15 @@ type Ctx = {
     q: Omit<Quote, 'id' | 'quoteDate' | 'status'> &
       Partial<Pick<Quote, 'status' | 'quoteDate'>>
   ) => Quote;
+  addTender: (
+    t: Omit<Tender, 'id' | 'status' | 'startingAt' | 'endingAt' | 'comments'> &
+      Partial<Pick<Tender, 'status' | 'startingAt' | 'endingAt'>>
+  ) => Tender;
+  addInvoice: (
+    i: Omit<Invoice, 'invoiceNumber' | 'status'> &
+      Partial<Pick<Invoice, 'status'>>
+  ) => Invoice;
+  loginAs: (type: 1 | 2 | 3) => void;
 };
 
 export const AppContext = createContext<Ctx>({} as any);
@@ -152,7 +182,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
       invoiceDueDate: '2024-05-10',
       amount: 100000,
       currency: 'SEK',
-      status: 1,
+      status: 2,
     },
     {
       tenderId: 451152231153,
@@ -165,7 +195,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
       status: 2,
     },
     {
-      tenderId: 451152231153,
+      tenderId: 451152231154,
       invoicingPart: 'Byggarna AB',
       invoiceNumber: 1003,
       invoiceDate: '2024-04-11',
@@ -175,7 +205,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
       status: 1,
     },
     {
-      tenderId: 451152231153,
+      tenderId: 451152231154,
       invoicingPart: 'Renoverare AB',
       invoiceNumber: 1004,
       invoiceDate: '2024-07-15',
@@ -185,7 +215,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
       status: 4,
     },
     {
-      tenderId: 451152231153,
+      tenderId: 451152231154,
       invoicingPart: 'Tak & Bygg AB',
       invoiceNumber: 1005,
       invoiceDate: '2024-06-20',
@@ -203,7 +233,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
       display: 'Eric Andrén',
       email: 'eric@techtify.se',
       id: 101,
-      profileImage: '/vercel.svg',
+      profileImage: '/eric_white.png',
       organisation: 'all',
       role: 'admin',
       type: 1,
@@ -214,7 +244,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
       display: 'Niklas Liljendahl',
       email: 'niklas@techtify.se',
       id: 102,
-      profileImage: '/vercel.svg',
+      profileImage: '/niklas_forest.jpg',
       organisation: 'all',
       role: 'viewer',
       type: 2,
@@ -225,7 +255,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
       display: 'Dante Rohlin',
       email: 'dante@techtify.se',
       id: 103,
-      profileImage: '/vercel.svg',
+      profileImage: '/dante.png',
       organisation: 'all',
       role: 'viewer',
       type: 3,
@@ -287,10 +317,16 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
           approvalStatus: 1,
         },
       ],
-      status: 1,
-      startingAt: '2024-05-01T10:30',
-      endingAt: '2024-05-02T12:00',
+      status: 4,
+      startingAt: '2025-05-01T10:30',
+      endingAt: '2025-06-01T12:00',
       comments: [],
+      phaseDates: {
+        registered: '2025-04-28T10:30',
+        biddingStarted: '2025-05-01T10:30',
+        awaitingResponse: '2025-05-02T12:00',
+        approved: '2025-05-02T12:00',
+      },
     },
     {
       id: 451152231152,
@@ -318,7 +354,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
         zip: '114 20',
         town: 'Stockholm',
       },
-      winningTender: null,
       tenderType: 2,
       damageType: { value: 2, label: 'Brand' },
       description: 'Brand i kök som orsakade rök- och sotskador...',
@@ -331,9 +366,22 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
           approvalStatus: null,
         },
       ],
-      status: 1,
-      startingAt: null,
-      endingAt: '2024-09-02T12:00',
+      status: 4,
+      phaseDates: {
+        registered: '2025-04-28T10:30',
+        biddingStarted: '2025-05-01T10:30',
+        approved: '2025-05-02T12:00',
+      },
+      winningTender: {
+        name: 'Bygg Pelle AB',
+        tenderPrice: 100000,
+        currency: 'SEK',
+        contactPerson: 'Anders Svensson',
+        phone: '0734015242',
+        id: 1001,
+      },
+      startingAt: '2025-09-02T12:00',
+      endingAt: '2025-09-12T12:00',
       comments: [],
     },
     {
@@ -362,7 +410,14 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
         zip: '114 20',
         town: 'Stockholm',
       },
-      winningTender: null,
+      winningTender: {
+        name: 'Bröderna Bygg AB',
+        tenderPrice: 100000,
+        currency: 'SEK',
+        contactPerson: 'Anders Svensson',
+        phone: '0734015242',
+        id: 1002,
+      },
       tenderType: 2,
       damageType: { value: 3, label: 'Skadegörelse' },
       description: 'Skadegörelse på fasad och fönster...',
@@ -381,10 +436,16 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
           approvalStatus: null,
         },
       ],
-      status: 1,
-      startingAt: null,
-      endingAt: '2024-09-02T12:00',
+      status: 4,
+      startingAt: '2025-05-01T10:30',
+      endingAt: '2025-05-12T12:00',
       comments: [],
+      phaseDates: {
+        registered: '2025-04-28T10:30',
+        biddingStarted: '2025-05-01T10:30',
+        awaitingResponse: '2025-05-02T12:00',
+        approved: '2025-05-02T12:00',
+      },
     },
     {
       id: 451152231154,
@@ -438,10 +499,14 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
           approvalStatus: 2,
         },
       ],
-      status: 3,
+      status: 2,
       startingAt: '2024-05-20T08:00',
       endingAt: '2024-06-15T17:00',
       comments: [],
+      phaseDates: {
+        registered: '2024-05-15T11:30:00',
+        biddingStarted: '2024-05-16T13:15:00',
+      },
     },
     {
       id: 451152231155,
@@ -488,10 +553,11 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
           approvalStatus: null,
         },
       ],
-      status: 2,
+      status: 1,
       startingAt: null,
       endingAt: '2024-08-15T12:00',
       comments: [],
+      phaseDates: {},
     },
   ]);
 
@@ -510,6 +576,38 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
     return prepared;
   };
 
+  const addTender: Ctx['addTender'] = (tenderInput) => {
+    const nextId =
+      tenders.length > 0
+        ? Math.max(...tenders.map((t) => t.id)) + 1
+        : 451152200000;
+    const prepared: Tender = {
+      ...tenderInput,
+      id: nextId,
+      status: tenderInput.status ?? 1,
+      startingAt: tenderInput.startingAt ?? null,
+      endingAt: tenderInput.endingAt ?? null,
+      comments: [],
+      phaseDates: (tenderInput as any).phaseDates || {},
+    } as Tender;
+    setTenders([prepared, ...tenders]);
+    return prepared;
+  };
+
+  const addInvoice: Ctx['addInvoice'] = (invoiceInput) => {
+    const nextNumber =
+      invoices.length > 0
+        ? Math.max(...invoices.map((i) => i.invoiceNumber)) + 1
+        : 1000;
+    const prepared: Invoice = {
+      ...invoiceInput,
+      invoiceNumber: nextNumber,
+      status: invoiceInput.status ?? 1,
+    } as Invoice;
+    setInvoices([prepared, ...invoices]);
+    return prepared;
+  };
+
   const value = useMemo<Ctx>(
     () => ({
       isLoggedIn,
@@ -525,6 +623,15 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = ({
       quotes,
       setQuotes,
       addQuote,
+      addTender,
+      addInvoice,
+      loginAs: (type: 1 | 2 | 3) => {
+        const found = users.find((u) => u.type === type);
+        if (found) {
+          setUser(found);
+          setIsLoggedIn(true);
+        }
+      },
     }),
     [isLoggedIn, user, breadCrumbs, invoices, tenders, quotes]
   );

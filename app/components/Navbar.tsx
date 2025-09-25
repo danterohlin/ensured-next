@@ -19,6 +19,24 @@ export default function Navbar() {
   const { isVisible, scrollY } = useScroll();
   const url = usePathname();
 
+  const isContractor = user?.type === 3;
+  const profileSrc = user?.profileImage
+    ? user.profileImage
+    : isContractor
+    ? '/dante.png'
+    : user?.type === 1
+    ? '/eric_white.png'
+    : '/niklas_forest.jpg';
+
+  // Ensure navbar is visible on each route change
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(
+        new CustomEvent('ensured-scroll', { detail: { scrollY: 0 } })
+      );
+    }
+  }, [url]);
+
   if (url === '/login') {
     return null;
   }
@@ -59,7 +77,7 @@ export default function Navbar() {
           className="flex items-center gap-3  rounded-lg p-2 -m-2 cursor-pointer transition-colors group"
         >
           <div className="h-9 w-9 rounded-full bg-white/10 overflow-hidden flex transition-opacity duration-300 group-hover:opacity-100 opacity-80 items-center justify-center object-cover">
-            <Image src={'/eric_white.png'} alt="User" width={34} height={34} />
+            <Image src={profileSrc} alt="User" width={34} height={34} />
           </div>
           <div className="text-sm opacity-80 group-hover:opacity-100 transition-opacity duration-300">
             {user.firstName}

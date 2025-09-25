@@ -1,5 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
+import { AppContext } from './AppContext';
 import { createContext, useContext, useState, ReactNode } from 'react';
 
 interface LogoutModalContextType {
@@ -18,6 +19,7 @@ export function LogoutModalProvider({ children }: { children: ReactNode }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
   const router = useRouter();
+  const { setIsLoggedIn } = useContext(AppContext);
   const openModal = (x: number, y: number) => {
     setModalPosition({ x, y });
     setIsModalOpen(true);
@@ -31,6 +33,7 @@ export function LogoutModalProvider({ children }: { children: ReactNode }) {
     // Handle logout logic here
     console.log('Logging out...');
     setIsModalOpen(false);
+    setIsLoggedIn(false);
     router.push('/login');
     // Redirect to login or handle logout
   };
