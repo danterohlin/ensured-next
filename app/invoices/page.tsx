@@ -154,7 +154,7 @@ export default function InvoicesPage() {
                         >
                           <FontAwesomeIcon
                             icon={faFilePdf}
-                            className="h-3 w-3 text-ensured-pink"
+                            className="h-3 w-3 text-lg text-ensured-pink"
                           />
                         </Link>
                       </td>
@@ -257,7 +257,7 @@ export default function InvoicesPage() {
                         >
                           <FontAwesomeIcon
                             icon={faFilePdf}
-                            className="h-3 w-3 text-ensured-pink"
+                            className="h-3 w-3 text-lg text-ensured-pink"
                           />
                         </Link>
                       </td>
@@ -359,7 +359,7 @@ export default function InvoicesPage() {
                         >
                           <FontAwesomeIcon
                             icon={faFilePdf}
-                            className="h-3 w-3 text-ensured-pink"
+                            className="h-3 w-3 text-lg text-ensured-pink"
                           />
                         </Link>
                       </td>

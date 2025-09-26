@@ -140,7 +140,7 @@ export default function ProtocolsPage() {
                       <button className="grid h-8 w-8 place-items-center mx-auto">
                         <FontAwesomeIcon
                           icon={faFilePdf}
-                          className="h-3 w-3 text-ensured-pink"
+                          className="h-3 w-3 text-lg text-ensured-pink"
                         />
                       </button>
                     </td>
@@ -169,7 +169,7 @@ export default function ProtocolsPage() {
                       <button className="grid h-8 w-8 place-items-center mx-auto">
                         <FontAwesomeIcon
                           icon={faFilePdf}
-                          className="h-3 w-3 text-ensured-pink"
+                          className="h-3 w-3 text-lg text-ensured-pink"
                         />
                       </button>
                     </td>
@@ -198,7 +198,7 @@ export default function ProtocolsPage() {
                       <button className="grid h-8 w-8 place-items-center mx-auto">
                         <FontAwesomeIcon
                           icon={faFilePdf}
-                          className="h-3 w-3 text-ensured-pink"
+                          className="h-3 w-3 text-lg text-ensured-pink"
                         />
                       </button>
                     </td>
@@ -280,7 +280,7 @@ export default function ProtocolsPage() {
                       <button className="grid h-8 w-8 place-items-center mx-auto">
                         <FontAwesomeIcon
                           icon={faFilePdf}
-                          className="h-3 w-3 text-ensured-pink"
+                          className="h-3 w-3 text-lg text-ensured-pink"
                         />
                       </button>
                     </td>
@@ -363,7 +363,7 @@ export default function ProtocolsPage() {
                       <button className="grid h-8 w-8 place-items-center mx-auto">
                         <FontAwesomeIcon
                           icon={faFilePdf}
-                          className="h-3 w-3 text-ensured-pink"
+                          className="h-3 w-3 text-lg text-ensured-pink"
                         />
                       </button>
                     </td>
